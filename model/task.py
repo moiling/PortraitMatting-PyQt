@@ -27,3 +27,4 @@ class Task:
     def __init__(self, orig_path):
         super().__init__()
         self.orig_path = orig_path
+        self.name = orig_path.split('/')[-1].split('\\')[-1]

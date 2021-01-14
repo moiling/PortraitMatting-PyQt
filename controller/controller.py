@@ -9,35 +9,6 @@ from enum import Enum
 import numpy as np
 
 
-class LoadModelThread(QThread):
-    load_finished_trigger = pyqtSignal(bool)
-
-    def __init__(self):
-        super().__init__()
-
-    def run(self):
-        succeed = Controller().load()
-        self.load_finished_trigger.emit(succeed)
-
-
-class MattingThread(QThread):
-    matting_finished_trigger = pyqtSignal()
-
-    def __init__(self, task, bg=None):
-        super().__init__()
-        self.task = task
-        self.img_url = task.orig_path
-        self.bg = bg
-
-    def run(self):
-        print('run')
-        # self.task.alpha, self.task.cutout, self.task.comp = Controller().matting(self.img_url, self.bg)
-        self.task.comp = cv2.imread(self.img_url)
-        self.task.state = TaskState.COMPING_DONE
-        print('done')
-        self.matting_finished_trigger.emit()
-
-
 class ModelState(Enum):
     FAIL         = -1
     INITIAL      = 0
@@ -50,16 +21,22 @@ class Controller:
     model_state = ModelState.INITIAL
     tasks = []
     task_callbacks = []
+    transparent_bg = None
 
     def __init__(self):
-        pass
-
-    @staticmethod
-    def load_model(callback):
-        thread = LoadModelThread()
-        thread.load_finished_trigger.connect(callback)
-        thread.start()
-        thread.exec()
+        h = w = const.MAX_SIZE
+        block_width = 8
+        chess = np.ones((((round(h / block_width)) + 1) * block_width, ((round(w / block_width)) + 1) * block_width, 1)) * 180
+        white_block = np.full((block_width, block_width, 1), 235)
+        for row in range(round(h / block_width)):
+            for col in range(round(w / block_width)):
+                if (row + col) % 2 == 0:
+                    row_begin = row * block_width
+                    row_end = row_begin + block_width
+                    col_begin = col * block_width
+                    col_end = col_begin + block_width
+                    chess[row_begin:row_end, col_begin:col_end] = white_block
+        self.transparent_bg = chess
 
     def load(self) -> bool:
         # time-consuming operation
@@ -90,20 +67,17 @@ class Controller:
 
     @staticmethod
     def exec_tasks(tasks, callbacks):
+        pass
         # for t, c in zip(tasks, callbacks):
         #     print(t.orig_path)
-        thread = MattingThread(tasks[0])
-        thread.matting_finished_trigger.connect(callbacks[0])
-        # thread.start()
-        # thread.exec()
-        thread.run()
 
     def matting(self, img_url, bg=None):
         # time-consuming operation
+        matte, img, trimap = self.m.matting(img_url, with_img_trimap=True, net_img_size=480, max_size=const.MAX_SIZE)
         if not bg:
-            bg = np.array([128, 128, 128])
+            h, w, c = img.shape
+            bg = self.transparent_bg[:h, :w]
 
-        matte, img, trimap = self.m.matting(img_url, with_img_trimap=True, net_img_size=480, max_size=378)
         cut = cutout(img, matte)
         comp = composite(cut, bg / 255.)
-        return matte, cut, comp
+        return matte * 255, cut * 255, comp * 255

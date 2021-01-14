@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(744, 563)
+        MainWindow.resize(860, 1024)
         MainWindow.setStyleSheet("#centralwidget {\n"
 "    background-color: rgb(255, 255, 255);\n"
 "    border:1px solid darkGray;\n"
@@ -79,11 +79,12 @@ class Ui_MainWindow(object):
         self.label.setMinimumSize(QtCore.QSize(150, 0))
         self.label.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
-        font.setPointSize(18)
-        font.setBold(True)
-        font.setItalic(True)
+        font.setFamily("Bauhaus 93")
+        font.setPointSize(20)
+        font.setBold(False)
+        font.setItalic(False)
         font.setUnderline(False)
-        font.setWeight(75)
+        font.setWeight(50)
         font.setStrikeOut(True)
         self.label.setFont(font)
         self.label.setWordWrap(True)
@@ -190,12 +191,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.title_cutout)
         self.verticalLayout.addWidget(self.tool_bar)
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
+        self.scrollArea.setStyleSheet("")
         self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.content = QtWidgets.QWidget()
-        self.content.setGeometry(QtCore.QRect(0, 0, 707, 18))
+        self.content.setGeometry(QtCore.QRect(0, 0, 823, 18))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -207,10 +209,18 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidget(self.content)
         self.verticalLayout.addWidget(self.scrollArea)
         self.hint = QtWidgets.QPushButton(self.centralwidget)
-        self.hint.setStyleSheet("background-color: rgb(79, 79, 79);\n"
+        font = QtGui.QFont()
+        font.setFamily("Terminal")
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.hint.setFont(font)
+        self.hint.setStyleSheet("QPushButton#hint{\n"
+"background-color: rgb(79, 79, 79);\n"
 "color: rgb(255, 255, 255);\n"
 "border-radius:4px;\n"
-"padding:8px;")
+"padding:8px;\n"
+"}")
         self.hint.setObjectName("hint")
         self.verticalLayout.addWidget(self.hint)
         MainWindow.setCentralWidget(self.centralwidget)
