@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt, pyqtSlot, QThread, pyqtSignal
 
 from controller.controller import Controller, ModelState
 from resource.main_window import Ui_MainWindow
+from vu.base_window import BaseWindow
 from vu.matting_form import MattingForm
 
 
@@ -19,7 +20,7 @@ class LoadModelThread(QThread):
         self.load_finished_trigger.emit(succeed)
 
 
-class MainWindow(Ui_MainWindow, QMainWindow):
+class MainWindow(Ui_MainWindow, BaseWindow):
 
     matting_forms = []
     thread = []
@@ -31,8 +32,6 @@ class MainWindow(Ui_MainWindow, QMainWindow):
         self.set_listener()
 
         self.setAcceptDrops(True)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.init()
 
     def init(self):
@@ -45,6 +44,12 @@ class MainWindow(Ui_MainWindow, QMainWindow):
             self.hint.setHidden(True)
         else:
             self.hint.setText('MODEL LOAD FAILED!')
+
+    @pyqtSlot()
+    def matting_finish_callback(self):
+        self.hint.setText(f'({Controller().finished_task_num}/{len(Controller().tasks)}) matting...')
+        if Controller().finished_task_num == len(Controller().tasks):
+            self.hint.setHidden(True)
 
     def set_listener(self):
         self.close_button.clicked.connect(self.on_close_button_click)
@@ -85,7 +90,7 @@ class MainWindow(Ui_MainWindow, QMainWindow):
             tasks = Controller().add_tasks(img_urls)
             callbacks = []
             for t in tasks:
-                form = MattingForm(t)
+                form = MattingForm(t, self.matting_finish_callback)
                 callback = form.result_callback
                 Controller().add_task_callback(callback)
                 callbacks.append(callback)
@@ -93,28 +98,7 @@ class MainWindow(Ui_MainWindow, QMainWindow):
                 self.matting_forms.append(form)
                 # after draw on the window.
                 form.matting()
+
+            self.hint.setText(f'({Controller().finished_task_num}/{len(Controller().tasks)}) matting...')
+            self.hint.setHidden(False)
             # Controller().exec_tasks(tasks, callbacks)
-
-    @pyqtSlot()
-    def on_close_button_click(self):
-        self.close()
-
-    @pyqtSlot()
-    def on_mini_button_click(self):
-        self.showMinimized()
-
-    def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
-            self.m_flag = True
-            self.m_Position = event.globalPos() - self.pos()
-            event.accept()
-            self.setCursor(QCursor(Qt.OpenHandCursor))
-
-    def mouseMoveEvent(self, event):
-        if Qt.LeftButton and self.m_flag:
-            self.move(event.globalPos() - self.m_Position)
-            event.accept()
-
-    def mouseReleaseEvent(self, event):
-        self.m_flag = False
-        self.setCursor(QCursor(Qt.ArrowCursor))

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>860</width>
-    <height>1024</height>
+    <width>880</width>
+    <height>952</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -277,26 +277,14 @@ background-color:white;
          <property name="styleSheet">
           <string notr="true">QPushButton{
 background:transparent;
-}
-QPushButton:hover{
-color:rgb(71,186,204);
-background:transparent;
-}
-QPushButton:pressed{
-color:white;
-background-color:rgb(71,186,204);
-}
-QPushButton:!enabled
-{
-color:rgb(130,130,130);
-}
-QPushButton:focus {
-color:black;
-background-color:white;
 }</string>
          </property>
          <property name="text">
           <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>icon/file.png</normaloff>icon/file.png</iconset>
          </property>
         </widget>
        </item>
@@ -322,7 +310,7 @@ background-color:white;
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>823</width>
+         <width>843</width>
          <height>18</height>
         </rect>
        </property>

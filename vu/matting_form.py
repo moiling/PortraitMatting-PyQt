@@ -13,6 +13,8 @@ from params import const
 from resource.matting_form import Ui_MattingForm
 import numpy as np
 
+from vu.change_bg_window import ChangeBgWindow
+
 
 class MattingThread(QThread):
     matting_finished_trigger = pyqtSignal()
@@ -31,16 +33,27 @@ class MattingThread(QThread):
 
 
 class MattingForm(Ui_MattingForm, QWidget):
-    def __init__(self, task):
+    def __init__(self, task, main_window_matting_finish_callback):
         super().__init__()
         self.setupUi(self)
         self.task = task
         self.img_url = task.orig_path
         self.show_origin_image()
+        self.main_window_matting_finish_callback = main_window_matting_finish_callback
+        self.set_listener()
+
+    def set_listener(self):
+        self.change_bg_button.clicked.connect(self.on_change_bg_button_clicked)
+
+    @pyqtSlot()
+    def on_change_bg_button_clicked(self):
+        self.cb_windows = ChangeBgWindow(self.task, self.show_result_image)
+        self.cb_windows.show()
 
     def matting(self):
         self.thread = MattingThread(self.task)
         self.thread.matting_finished_trigger.connect(self.result_callback)
+        self.thread.matting_finished_trigger.connect(self.main_window_matting_finish_callback)
         self.thread.start()
         # self.thread.exec()  # can't use exec!
 

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>977</width>
+    <width>812</width>
     <height>709</height>
    </rect>
   </property>
@@ -99,7 +99,7 @@ border:2px solid black;
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="change_bg_button">
            <property name="font">
             <font>
              <family>Terminal</family>

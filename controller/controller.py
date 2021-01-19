@@ -1,5 +1,5 @@
 import cv2
-from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QMutex, QSemaphore
 
 from algorithm import Matting, cutout, composite
 from controller.singleton import Singleton
@@ -21,7 +21,10 @@ class Controller:
     model_state = ModelState.INITIAL
     tasks = []
     task_callbacks = []
+    finished_task_num = 0
     transparent_bg = None
+    # matting_lock = QMutex()
+    matting_lock = QSemaphore(4)
 
     def __init__(self):
         h = w = const.MAX_SIZE
@@ -51,8 +54,9 @@ class Controller:
     def add_tasks(self, img_urls):
         new_tasks = []
         for url in img_urls:
-            new_tasks.append(Task(url))
-        self.tasks.append(new_tasks)
+            task = Task(url)
+            self.tasks.append(task)
+            new_tasks.append(task)
         return new_tasks
 
     def add_task_callback(self, callback):
@@ -73,11 +77,23 @@ class Controller:
 
     def matting(self, img_url, bg=None):
         # time-consuming operation
+        self.matting_lock.acquire()
         matte, img, trimap = self.m.matting(img_url, with_img_trimap=True, net_img_size=480, max_size=const.MAX_SIZE)
-        if not bg:
+        if bg is None:
             h, w, c = img.shape
             bg = self.transparent_bg[:h, :w]
 
         cut = cutout(img, matte)
         comp = composite(cut, bg / 255.)
+        self.matting_lock.release()
+        self.finished_task_num += 1
         return matte * 255, cut * 255, comp * 255
+
+    def change_background(self, task, bg=None):
+        cut = task.cutout / 255.
+        task.bg = bg
+        if bg is None:
+            h, w, c = cut.shape
+            bg = self.transparent_bg[:h, :w]
+        comp = composite(cut, bg / 255.)
+        return comp * 255

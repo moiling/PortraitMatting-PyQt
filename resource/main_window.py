@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(860, 1024)
+        MainWindow.resize(880, 952)
         MainWindow.setStyleSheet("#centralwidget {\n"
 "    background-color: rgb(255, 255, 255);\n"
 "    border:1px solid darkGray;\n"
@@ -169,24 +169,11 @@ class Ui_MainWindow(object):
         self.title_cutout = QtWidgets.QPushButton(self.tool_bar)
         self.title_cutout.setStyleSheet("QPushButton{\n"
 "background:transparent;\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:rgb(71,186,204);\n"
-"background:transparent;\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(71,186,204);\n"
-"}\n"
-"QPushButton:!enabled\n"
-"{\n"
-"color:rgb(130,130,130);\n"
-"}\n"
-"QPushButton:focus {\n"
-"color:black;\n"
-"background-color:white;\n"
 "}")
         self.title_cutout.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("icon/file.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.title_cutout.setIcon(icon)
         self.title_cutout.setObjectName("title_cutout")
         self.horizontalLayout.addWidget(self.title_cutout)
         self.verticalLayout.addWidget(self.tool_bar)
@@ -197,7 +184,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.content = QtWidgets.QWidget()
-        self.content.setGeometry(QtCore.QRect(0, 0, 823, 18))
+        self.content.setGeometry(QtCore.QRect(0, 0, 843, 18))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

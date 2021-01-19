@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MattingForm(object):
     def setupUi(self, MattingForm):
         MattingForm.setObjectName("MattingForm")
-        MattingForm.resize(788, 579)
+        MattingForm.resize(812, 709)
         MattingForm.setStyleSheet("QWidget#border_widget{\n"
 "background-color: rgb(255, 255, 255);\n"
 "border-radius:6px;\n"
@@ -50,12 +50,12 @@ class Ui_MattingForm(object):
         self.horizontalLayout_2.addWidget(self.img_name)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem)
-        self.pushButton = QtWidgets.QPushButton(self.widget_4)
+        self.change_bg_button = QtWidgets.QPushButton(self.widget_4)
         font = QtGui.QFont()
         font.setFamily("Terminal")
         font.setPointSize(12)
-        self.pushButton.setFont(font)
-        self.pushButton.setStyleSheet("QPushButton{\n"
+        self.change_bg_button.setFont(font)
+        self.change_bg_button.setStyleSheet("QPushButton{\n"
 "background:#F7D674;\n"
 "border-radius:6px;\n"
 "padding-top:6px;\n"
@@ -67,8 +67,8 @@ class Ui_MattingForm(object):
 "QPushButton:hover{\n"
 "background:yellow;\n"
 "}")
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout_2.addWidget(self.pushButton)
+        self.change_bg_button.setObjectName("change_bg_button")
+        self.horizontalLayout_2.addWidget(self.change_bg_button)
         self.verticalLayout_4.addWidget(self.widget_4)
         self.widget_5 = QtWidgets.QWidget(self.border_widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -78,7 +78,7 @@ class Ui_MattingForm(object):
         self.widget_5.setSizePolicy(sizePolicy)
         self.widget_5.setObjectName("widget_5")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.widget_5)
-        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setContentsMargins(12, 0, 12, 0)
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.widget_2 = QtWidgets.QWidget(self.widget_5)
@@ -127,6 +127,8 @@ class Ui_MattingForm(object):
         self.label.setObjectName("label")
         self.verticalLayout_2.addWidget(self.label)
         self.horizontalLayout_3.addWidget(self.widget_2)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem1)
         self.widget_3 = QtWidgets.QWidget(self.widget_5)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -178,7 +180,7 @@ class Ui_MattingForm(object):
         _translate = QtCore.QCoreApplication.translate
         MattingForm.setWindowTitle(_translate("MattingForm", "Form"))
         self.img_name.setText(_translate("MattingForm", "TextLabel"))
-        self.pushButton.setText(_translate("MattingForm", "BG"))
+        self.change_bg_button.setText(_translate("MattingForm", "BG"))
         self.image_label.setText(_translate("MattingForm", "DROP IMAGE HERE"))
         self.label.setText(_translate("MattingForm", "ORIGINAL"))
         self.result_label.setText(_translate("MattingForm", "MATTING..."))
