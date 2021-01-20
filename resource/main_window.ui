@@ -245,46 +245,58 @@ background-color:white;
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="title_matting">
+        <widget class="QPushButton" name="open_button">
+         <property name="font">
+          <font>
+           <family>Terminal</family>
+           <pointsize>12</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">QPushButton{
-background:transparent;
+background:white;
+border-radius:6px;
+padding-top:6px;
+padding-bottom:6px;
+padding-left:12px;
+padding-right:12px;
+border:2px solid black;
 }
 QPushButton:hover{
-color:rgb(71,186,204);
-background:transparent;
-}
-QPushButton:pressed{
-color:white;
-background-color:rgb(71,186,204);
-}
-QPushButton:!enabled
-{
-color:rgb(130,130,130);
-}
-QPushButton:focus {
-color:black;
-background-color:white;
+background:rgb(181, 181, 181);
 }</string>
          </property>
          <property name="text">
-          <string/>
+          <string>OPEN</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="title_cutout">
+        <widget class="QPushButton" name="save_button">
+         <property name="font">
+          <font>
+           <family>Terminal</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">QPushButton{
-background:transparent;
+background:white;
+border-radius:6px;
+padding-top:6px;
+padding-bottom:6px;
+padding-left:12px;
+padding-right:12px;
+border:2px solid black;
+}
+QPushButton:hover{
+background:rgb(181, 181, 181);
 }</string>
          </property>
          <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>icon/file.png</normaloff>icon/file.png</iconset>
+          <string>SAVE</string>
          </property>
         </widget>
        </item>
@@ -294,7 +306,14 @@ background:transparent;
     <item>
      <widget class="QScrollArea" name="scrollArea">
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">QScrollArea{
+background-color:rgb(230, 230, 230);
+border:2px solid rgb(230, 230, 230);
+border-radius:10px;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
       </property>
       <property name="verticalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -310,7 +329,7 @@ background:transparent;
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>843</width>
+         <width>841</width>
          <height>18</height>
         </rect>
        </property>
@@ -319,6 +338,11 @@ background:transparent;
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QWidget#content{
+background-color:rgb(230, 230, 230);
+}</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2"/>
       </widget>

@@ -143,53 +143,68 @@ class Ui_MainWindow(object):
         self.title_trimap.setText("")
         self.title_trimap.setObjectName("title_trimap")
         self.horizontalLayout.addWidget(self.title_trimap)
-        self.title_matting = QtWidgets.QPushButton(self.tool_bar)
-        self.title_matting.setStyleSheet("QPushButton{\n"
-"background:transparent;\n"
+        self.open_button = QtWidgets.QPushButton(self.tool_bar)
+        font = QtGui.QFont()
+        font.setFamily("Terminal")
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.open_button.setFont(font)
+        self.open_button.setStyleSheet("QPushButton{\n"
+"background:white;\n"
+"border-radius:6px;\n"
+"padding-top:6px;\n"
+"padding-bottom:6px;\n"
+"padding-left:12px;\n"
+"padding-right:12px;\n"
+"border:2px solid black;\n"
 "}\n"
 "QPushButton:hover{\n"
-"color:rgb(71,186,204);\n"
-"background:transparent;\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(71,186,204);\n"
-"}\n"
-"QPushButton:!enabled\n"
-"{\n"
-"color:rgb(130,130,130);\n"
-"}\n"
-"QPushButton:focus {\n"
-"color:black;\n"
-"background-color:white;\n"
+"background:rgb(181, 181, 181);\n"
 "}")
-        self.title_matting.setText("")
-        self.title_matting.setObjectName("title_matting")
-        self.horizontalLayout.addWidget(self.title_matting)
-        self.title_cutout = QtWidgets.QPushButton(self.tool_bar)
-        self.title_cutout.setStyleSheet("QPushButton{\n"
-"background:transparent;\n"
+        self.open_button.setObjectName("open_button")
+        self.horizontalLayout.addWidget(self.open_button)
+        self.save_button = QtWidgets.QPushButton(self.tool_bar)
+        font = QtGui.QFont()
+        font.setFamily("Terminal")
+        font.setPointSize(12)
+        self.save_button.setFont(font)
+        self.save_button.setStyleSheet("QPushButton{\n"
+"background:white;\n"
+"border-radius:6px;\n"
+"padding-top:6px;\n"
+"padding-bottom:6px;\n"
+"padding-left:12px;\n"
+"padding-right:12px;\n"
+"border:2px solid black;\n"
+"}\n"
+"QPushButton:hover{\n"
+"background:rgb(181, 181, 181);\n"
 "}")
-        self.title_cutout.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icon/file.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.title_cutout.setIcon(icon)
-        self.title_cutout.setObjectName("title_cutout")
-        self.horizontalLayout.addWidget(self.title_cutout)
+        self.save_button.setObjectName("save_button")
+        self.horizontalLayout.addWidget(self.save_button)
         self.verticalLayout.addWidget(self.tool_bar)
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
-        self.scrollArea.setStyleSheet("")
+        self.scrollArea.setStyleSheet("QScrollArea{\n"
+"background-color:rgb(230, 230, 230);\n"
+"border:2px solid rgb(230, 230, 230);\n"
+"border-radius:10px;\n"
+"}")
+        self.scrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.content = QtWidgets.QWidget()
-        self.content.setGeometry(QtCore.QRect(0, 0, 843, 18))
+        self.content.setGeometry(QtCore.QRect(0, 0, 841, 18))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.content.sizePolicy().hasHeightForWidth())
         self.content.setSizePolicy(sizePolicy)
+        self.content.setStyleSheet("QWidget#content{\n"
+"background-color:rgb(230, 230, 230);\n"
+"}")
         self.content.setObjectName("content")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.content)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -219,4 +234,6 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Background Eraser"))
         self.label.setText(_translate("MainWindow", "BACKGROUND"))
+        self.open_button.setText(_translate("MainWindow", "OPEN"))
+        self.save_button.setText(_translate("MainWindow", "SAVE"))
         self.hint.setText(_translate("MainWindow", "hint"))

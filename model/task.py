@@ -13,14 +13,15 @@ class TaskState(Enum):
 
 
 class Task:
-    orig_path = ''
-    name      = ''
-    orig_img  = None
-    cutout    = None
-    fg        = None
-    bg        = None
-    alpha     = None
-    comp      = None
+    orig_path  = ''
+    name       = ''
+    short_name = ''
+    orig_img   = None
+    cutout     = None
+    fg         = None
+    bg         = None
+    alpha      = None
+    comp       = None
 
     state = TaskState.INITIAL
 
@@ -28,3 +29,9 @@ class Task:
         super().__init__()
         self.orig_path = orig_path
         self.name = orig_path.split('/')[-1].split('\\')[-1]
+
+        self.short_name = self.name
+
+        max_len = 20
+        if len(self.short_name) > max_len:
+            self.short_name = '...' + self.name[-max_len:]

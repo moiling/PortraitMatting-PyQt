@@ -38,18 +38,36 @@ class Ui_MattingForm(object):
         sizePolicy.setHeightForWidth(self.widget_4.sizePolicy().hasHeightForWidth())
         self.widget_4.setSizePolicy(sizePolicy)
         self.widget_4.setObjectName("widget_4")
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.widget_4)
-        self.horizontalLayout_2.setContentsMargins(12, -1, 12, -1)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget_4)
+        self.horizontalLayout.setObjectName("horizontalLayout")
         self.img_name = QtWidgets.QLabel(self.widget_4)
         font = QtGui.QFont()
         font.setFamily("Terminal")
         font.setPointSize(12)
         self.img_name.setFont(font)
         self.img_name.setObjectName("img_name")
-        self.horizontalLayout_2.addWidget(self.img_name)
+        self.horizontalLayout.addWidget(self.img_name)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem)
+        self.horizontalLayout.addItem(spacerItem)
+        self.detail_button = QtWidgets.QPushButton(self.widget_4)
+        font = QtGui.QFont()
+        font.setFamily("Terminal")
+        font.setPointSize(12)
+        self.detail_button.setFont(font)
+        self.detail_button.setStyleSheet("QPushButton{\n"
+"background:#F7D674;\n"
+"border-radius:6px;\n"
+"padding-top:6px;\n"
+"padding-bottom:6px;\n"
+"padding-left:12px;\n"
+"padding-right:12px;\n"
+"border:2px solid black;\n"
+"}\n"
+"QPushButton:hover{\n"
+"background:yellow;\n"
+"}")
+        self.detail_button.setObjectName("detail_button")
+        self.horizontalLayout.addWidget(self.detail_button)
         self.change_bg_button = QtWidgets.QPushButton(self.widget_4)
         font = QtGui.QFont()
         font.setFamily("Terminal")
@@ -68,7 +86,7 @@ class Ui_MattingForm(object):
 "background:yellow;\n"
 "}")
         self.change_bg_button.setObjectName("change_bg_button")
-        self.horizontalLayout_2.addWidget(self.change_bg_button)
+        self.horizontalLayout.addWidget(self.change_bg_button)
         self.verticalLayout_4.addWidget(self.widget_4)
         self.widget_5 = QtWidgets.QWidget(self.border_widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -180,6 +198,7 @@ class Ui_MattingForm(object):
         _translate = QtCore.QCoreApplication.translate
         MattingForm.setWindowTitle(_translate("MattingForm", "Form"))
         self.img_name.setText(_translate("MattingForm", "TextLabel"))
+        self.detail_button.setText(_translate("MattingForm", "VU"))
         self.change_bg_button.setText(_translate("MattingForm", "BG"))
         self.image_label.setText(_translate("MattingForm", "DROP IMAGE HERE"))
         self.label.setText(_translate("MattingForm", "ORIGINAL"))

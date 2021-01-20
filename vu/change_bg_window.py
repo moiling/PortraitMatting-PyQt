@@ -35,7 +35,7 @@ class ChangeBgWindow(Ui_ChangeBgWindow, BaseWindow):
         self.task = task
         self.origin_bg = task.bg
 
-        self.img_name.setText(self.task.name)
+        self.img_name.setText(self.task.short_name)
         self.set_listener()
         self.show_result_image()
 

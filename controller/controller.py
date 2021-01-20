@@ -1,3 +1,5 @@
+import os
+
 import cv2
 from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QMutex, QSemaphore
 
@@ -68,6 +70,24 @@ class Controller:
             new_callbacks.append(c)
         self.task_callbacks.append(new_callbacks)
         return new_callbacks
+
+    def save_results(self, save_dir):
+        os.makedirs(save_dir, exist_ok=True)
+        for t in self.tasks:
+            name = t.name
+            if t.state != TaskState.COMPING_DONE:
+                continue
+            if t.bg is None:
+                # cutout must use png.
+                name = name.replace('.jpg', '.png')
+                name = name.replace('.jpeg', '.png')
+                name = name.replace('.jpe', '.png')
+                name = name.replace('.JPG', '.png')
+                name = name.replace('.JPEG', '.png')
+                name = name.replace('.JPE', '.png')
+                cv2.imwrite(os.path.join(save_dir, name), cv2.cvtColor(np.uint8(t.cutout), cv2.COLOR_RGBA2BGRA))
+            else:
+                cv2.imwrite(os.path.join(save_dir, name), cv2.cvtColor(np.uint8(t.comp), cv2.COLOR_RGB2BGR))
 
     @staticmethod
     def exec_tasks(tasks, callbacks):

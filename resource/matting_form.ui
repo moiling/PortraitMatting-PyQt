@@ -65,13 +65,7 @@ border:2px solid black;
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="leftMargin">
-          <number>12</number>
-         </property>
-         <property name="rightMargin">
-          <number>12</number>
-         </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QLabel" name="img_name">
            <property name="font">
@@ -97,6 +91,33 @@ border:2px solid black;
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="detail_button">
+           <property name="font">
+            <font>
+             <family>Terminal</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton{
+background:#F7D674;
+border-radius:6px;
+padding-top:6px;
+padding-bottom:6px;
+padding-left:12px;
+padding-right:12px;
+border:2px solid black;
+}
+QPushButton:hover{
+background:yellow;
+}</string>
+           </property>
+           <property name="text">
+            <string>VU</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="change_bg_button">

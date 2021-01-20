@@ -68,7 +68,7 @@ class MattingForm(Ui_MattingForm, QWidget):
 
         pix = ImageQt.toqpixmap(img)
         self.image_label.setPixmap(pix)
-        self.img_name.setText(self.task.name)
+        self.img_name.setText(self.task.short_name)
 
     @pyqtSlot()
     def result_callback(self):
