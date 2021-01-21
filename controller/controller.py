@@ -95,10 +95,10 @@ class Controller:
         # for t, c in zip(tasks, callbacks):
         #     print(t.orig_path)
 
-    def matting(self, img_url, bg=None):
+    def matting(self, img_url, bg=None, trimap=None):
         # time-consuming operation
         self.matting_lock.acquire()
-        matte, img, trimap = self.m.matting(img_url, with_img_trimap=True, net_img_size=480, max_size=const.MAX_SIZE)
+        matte, img, trimap = self.m.matting(img_url, with_img_trimap=True, net_img_size=480, max_size=const.MAX_SIZE, trimap=trimap)
         if bg is None:
             h, w, c = img.shape
             bg = self.transparent_bg[:h, :w]
@@ -107,7 +107,7 @@ class Controller:
         comp = composite(cut, bg / 255.)
         self.matting_lock.release()
         self.finished_task_num += 1
-        return matte * 255, cut * 255, comp * 255
+        return np.uint8(matte * 255), np.uint8(cut * 255), np.uint8(comp * 255), np.uint8(trimap * 255)
 
     def change_background(self, task, bg=None):
         cut = task.cutout / 255.

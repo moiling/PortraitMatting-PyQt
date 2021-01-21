@@ -115,7 +115,34 @@ background:yellow;
 }</string>
            </property>
            <property name="text">
-            <string>VU</string>
+            <string>V</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="change_trimap_button">
+           <property name="font">
+            <font>
+             <family>Terminal</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton{
+background:#F7D674;
+border-radius:6px;
+padding-top:6px;
+padding-bottom:6px;
+padding-left:12px;
+padding-right:12px;
+border:2px solid black;
+}
+QPushButton:hover{
+background:yellow;
+}</string>
+           </property>
+           <property name="text">
+            <string>T</string>
            </property>
           </widget>
          </item>
@@ -142,7 +169,7 @@ background:yellow;
 }</string>
            </property>
            <property name="text">
-            <string>BG</string>
+            <string>B</string>
            </property>
           </widget>
          </item>

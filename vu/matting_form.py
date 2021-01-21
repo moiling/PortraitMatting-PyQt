@@ -14,6 +14,7 @@ from resource.matting_form import Ui_MattingForm
 import numpy as np
 
 from vu.change_bg_window import ChangeBgWindow
+from vu.change_trimap_window import ChangeTrimapWindow
 
 
 class MattingThread(QThread):
@@ -27,7 +28,7 @@ class MattingThread(QThread):
         self.bg = bg
 
     def run(self):
-        self.task.alpha, self.task.cutout, self.task.comp = Controller().matting(self.img_url, self.bg)
+        self.task.alpha, self.task.cutout, self.task.comp, self.task.trimap = Controller().matting(self.img_url, self.bg)
         self.task.state = TaskState.COMPING_DONE
         self.matting_finished_trigger.emit()
 
@@ -41,9 +42,16 @@ class MattingForm(Ui_MattingForm, QWidget):
         self.show_origin_image()
         self.main_window_matting_finish_callback = main_window_matting_finish_callback
         self.set_listener()
+        self.detail_button.setHidden(True)
 
     def set_listener(self):
         self.change_bg_button.clicked.connect(self.on_change_bg_button_clicked)
+        self.change_trimap_button.clicked.connect(self.on_change_trimap_button_clicked)
+
+    @pyqtSlot()
+    def on_change_trimap_button_clicked(self):
+        self.ct_windows = ChangeTrimapWindow(self.task, self.show_result_image)
+        self.ct_windows.show()
 
     @pyqtSlot()
     def on_change_bg_button_clicked(self):

@@ -22,6 +22,7 @@ class Task:
     bg         = None
     alpha      = None
     comp       = None
+    trimap     = None
 
     state = TaskState.INITIAL
 
