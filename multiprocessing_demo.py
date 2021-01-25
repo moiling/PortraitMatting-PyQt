@@ -10,7 +10,7 @@ img_dir = 'D:/Mission/photos'
 checkpoint_path = 'algorithm/matte/ckpt/best.pt'
 out_comp_dir = 'out/comp'
 bg_color = [33, 150, 243]  # BGR
-M = Matting(checkpoint_path=checkpoint_path, gpu=False)
+M = Matting(model_path=checkpoint_path, gpu=False)
 
 
 def matting(name):

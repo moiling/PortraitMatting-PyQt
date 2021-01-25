@@ -4,28 +4,33 @@ from PIL import Image
 from torchvision.transforms import functional as F
 
 from . import transforms
-from .model.matting_net import MattingNet
 
 
 class Matting:
-    def __init__(self, checkpoint_path='', gpu=False):
+    def __init__(self, model_path='', model_fix_path='', gpu=False):
         torch.set_flush_denormal(True)  # flush cpu subnormal float.
-        self.checkpoint_path = checkpoint_path
+        self.model_path = model_path
+        self.model_fix_path = model_fix_path
         self.gpu = gpu
-        self.model = self.__load_model()
+        self.model, self.model_fix = self.__load_model()
 
     def __load_model(self):
-        model = MattingNet()
+        # model = MattingNet()
+        model = torch.jit.load(self.model_path, map_location='cpu')
+        model_fix = torch.jit.load(self.model_fix_path, map_location='cpu')
         if self.gpu and torch.cuda.is_available():
             model.cuda()
+            model_fix.cuda()
         else:
             model.cpu()
+            model_fix.cpu()
 
         # load checkpoint.
-        checkpoint = torch.load(self.checkpoint_path, map_location='cpu')
-        model.load_state_dict(checkpoint['model_state_dict'])
+        # checkpoint = torch.load(self.checkpoint_path, map_location='cpu')
+        # model.load_state_dict(checkpoint['model_state_dict'])
         model.eval()
-        return model
+        model_fix.eval()
+        return model, model_fix
 
     def matting(self, image_path, with_img_trimap=False, net_img_size=-1, max_size=-1, trimap=None):
         """
@@ -56,14 +61,21 @@ class Matting:
             # resize to training size.
             if net_img_size > 0:
                 resize_image = F.resize(image, [net_img_size, net_img_size], Image.BILINEAR)
-                resize_trimap = None
+
                 if trimap_3 is not None:
                     resize_trimap = F.resize(trimap_3, [net_img_size, net_img_size], Image.BILINEAR)
-                pred_matte, pred_trimap_prob, _ = self.model(resize_image, resize_trimap)
+                    pred_matte, pred_trimap_prob, _ = self.model_fix(resize_image, resize_trimap)
+                else:
+                    pred_matte, pred_trimap_prob, _ = self.model(resize_image)
+
                 pred_matte = F.resize(pred_matte, [h, w])
                 pred_trimap_prob = F.resize(pred_trimap_prob, [h, w], Image.BILINEAR)
+
             else:
-                pred_matte, pred_trimap_prob, _ = self.model(image, trimap_3)
+                if trimap_3 is not None:
+                    pred_matte, pred_trimap_prob, _ = self.model_fix(image, trimap_3)
+                else:
+                    pred_matte, pred_trimap_prob, _ = self.model(image)
 
             pred_matte = pred_matte.cpu().detach().squeeze(dim=0).numpy().transpose(1, 2, 0)
             image = image.cpu().detach().squeeze(dim=0).numpy().transpose(1, 2, 0)

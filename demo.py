@@ -27,15 +27,16 @@ def matting(img_dir, out_comp_dir, bg_color, img_names):
 
 
 if __name__ == '__main__':
-    img_dir         = 'D:/Mission/photos'
-    out_comp_dir    = 'out/comp'
-    checkpoint_path = 'algorithm/matte/ckpt/best.pt'
+    img_dir        = 'D:/Mission/photos'
+    out_comp_dir   = 'out/comp'
+    model_path     = 'algorithm/matte/model.pth'
+    model_fix_path = 'algorithm/matte/model_fix.pth'
 
     bg_color = [33, 150, 243]  # BGR
 
     os.makedirs(out_comp_dir, exist_ok=True)
 
-    M = Matting(checkpoint_path=checkpoint_path, gpu=True)
+    M = Matting(model_path=model_path, model_fix_path=model_fix_path, gpu=True)
 
     img_names = os.listdir(img_dir)
 

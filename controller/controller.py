@@ -46,7 +46,7 @@ class Controller:
     def load(self) -> bool:
         # time-consuming operation
         try:
-            self.m = Matting(checkpoint_path=const.CHECKPOINT_PATH, gpu=True)
+            self.m = Matting(model_path=const.MODEL_PATH, model_fix_path=const.MODEL_FIX_PATH, gpu=True)
             self.model_state = ModelState.LOADED
             return True   # succeed
         except Exception:
