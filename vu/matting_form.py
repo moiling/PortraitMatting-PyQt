@@ -68,6 +68,8 @@ class MattingForm(Ui_MattingForm, QWidget):
     def show_origin_image(self):
         size = const.MAX_SIZE
         img = Image.open(self.img_url)
+        img = img.convert('RGBA')
+        
         max_size = max(img.size[0], img.size[1])
         if max_size > size:
             rate = size / float(max_size)
